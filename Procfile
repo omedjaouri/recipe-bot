@@ -1,1 +1,1 @@
-web: export FLASK_APP="recipe-bot" && export FLASK_ENV="development" && flask run
+web: flask translate compile; gunicorn recipe-bot:app
