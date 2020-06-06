@@ -1,1 +1,1 @@
-web: flask translate compile; gunicorn recipe-bot:app
+web: gunicorn recipe-bot:app
