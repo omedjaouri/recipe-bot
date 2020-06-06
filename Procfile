@@ -1,1 +1,1 @@
-web: export FLASK_APP="recipe-bot" && flask run
+web: export FLASK_APP="recipe-bot" && export FLASK_ENV="development" && flask run
