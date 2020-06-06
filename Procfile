@@ -1,1 +1,1 @@
-web: gunicorn recipe-bot:app
+web: gunicorn recipe-bot:recipe-bot
