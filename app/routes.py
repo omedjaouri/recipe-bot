@@ -6,14 +6,14 @@ from flask import jsonify, request
 def home():
     return "This is a simple web-page for Recipe-Bot!"
 
-@app.route("/hello", methods=["POST"])
-def hello():
-    return "Hello Slack!"
-
 @app.route("/recipe", methods=["POST"])
 def recipe():
-    print(request)
     #Verify we received the request from Slack
     if request.form['token'] == app.config["SLACK_VERIFICATION_TOKEN"]:
+        #Pass the request to RecipeBot
+        print("Request Keys: " + str(request.form.keys()) 
+        
+        
+        
         payload = {'text': 'Thanks for sending a recipe to me!'}
         return jsonify(payload)
