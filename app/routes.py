@@ -16,7 +16,7 @@ def recipe():
         ret = validate_url(text) 
         #If user supplied bad url, return response
         if ret is False:
-            payload = {'text': "Sorry, but you didn't supply a valid url."
+            payload = {'text': "Sorry, but you didn't supply a valid url."}
             return jsonify(payload)
         #Continue to parse URL
 
