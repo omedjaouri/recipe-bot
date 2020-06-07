@@ -11,9 +11,6 @@ def recipe():
     #Verify we received the request from Slack
     if request.form['token'] == app.config["SLACK_VERIFICATION_TOKEN"]:
         #Pass the request to RecipeBot
-        print("Request Keys: " + str(request.form.keys()) 
-        
-        
-        
+        print("Request Keys: " + str(request.form.keys())) 
         payload = {'text': 'Thanks for sending a recipe to me!'}
         return jsonify(payload)
