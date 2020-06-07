@@ -1,6 +1,6 @@
 from app import app
 from flask import jsonify, request
-from util import *
+from .util import *
 
 #Set up home routing
 @app.route("/", methods=["GET"])
