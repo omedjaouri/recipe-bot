@@ -1,1 +1,1 @@
-from bot import recipe-bot
+from .recipe import *

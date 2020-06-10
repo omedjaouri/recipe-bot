@@ -1,18 +1,21 @@
-from flask import jsonify, request, current_app
+from flask import Blueprint, jsonify, request, current_app
 from .util import *
 
+#Set up blueprint
+bp = Blueprint('routes', __name__, url_prefix='/')
+
 #Set up home routing
-@app.route("/", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def home():
     return "This is a simple web-page for Recipe-Bot!"
 
-@app.route("/recipe", methods=["POST"])
+@bp.route("/recipe", methods=["POST"])
 def recipe():
     #Grab the bot to interact with
-    bot = current_app.config['Bot']
+    bot = app.config['Bot']
 
     #Verify we received the request from Slack
-    if request.form['token'] == current_app.config["SLACK_VERIFICATION_TOKEN"]:
+    if request.form['token'] == app.config["SLACK_VERIFICATION_TOKEN"]:
         #Pass the request to RecipeBot
         text = request.form['text'].split(" ")[0]
         
