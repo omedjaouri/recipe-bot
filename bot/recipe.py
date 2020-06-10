@@ -10,9 +10,9 @@
 class RecipeBot():
 
     #Initialization of the bot
-    def __init__():
+    def __init__(self):
         pass
 
     #Simple hello message for testing purposes
-    def say_hello():
+    def say_hello(self):
         return "Hello!"
