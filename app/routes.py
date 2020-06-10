@@ -1,5 +1,4 @@
-from app import app
-from flask import jsonify, request
+from flask import jsonify, request, current_app
 from .util import *
 
 #Set up home routing
@@ -10,10 +9,10 @@ def home():
 @app.route("/recipe", methods=["POST"])
 def recipe():
     #Grab the bot to interact with
-    bot = app.config['Bot']
+    bot = current_app.config['Bot']
 
     #Verify we received the request from Slack
-    if request.form['token'] == app.config["SLACK_VERIFICATION_TOKEN"]:
+    if request.form['token'] == current_app.config["SLACK_VERIFICATION_TOKEN"]:
         #Pass the request to RecipeBot
         text = request.form['text'].split(" ")[0]
         
