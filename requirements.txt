@@ -3,3 +3,4 @@ flask
 slackclient
 python-dotenv
 requests
+beautifulsoup4
