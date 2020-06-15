@@ -18,9 +18,6 @@ def recipe():
         if ret is None:
             payload = {'text': "Sorry, but you didn't supply a valid url."}
             return jsonify(payload)
-        #Continue to parse URL
-
-
-
-        payload = {'text': 'Thanks for sending a recipe to me!'}
+        #Else, return the recipe the user requested
+        payload = {'text': ret}
         return jsonify(payload)

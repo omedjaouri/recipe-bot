@@ -1,25 +1,53 @@
-from urllib.parse import urlparse
+import requests
+import re
+from bs4 import BeautifulSoup
 
-#Verifies that the user sent a valid URL
-def validate_url(url):
-    #Return false if the URL is none or does not match URL regex
-    parsed_url = urlparse(url)
-    if scheme == '' or netloc == '':
-        return None #Bad URL
-    else:
-        return parsed_url
+TAG_RE = re.compile(r'<[^>]+>')
+
+def remove_tags(text):
+    return TAG_RE.sub('', text)
+
+#Formats a list of ingredients into a listed recipe
+def to_recipe(ingredients):
+    ret_string = "Ingredients: \n"
+    for ingredient in ingredients:
+        ret_string = ret_string + "\t- "+ingredient+"\n"
+    return ret_string
+
 
 
 #Processes a user's request to handle a recipe link
 def process_request(req):
-    #Validate the url
-    url = validate_url(req)
-    #If the url is invalid, report None
-    if url is None:
+    #Issue an HTTP Get command to the url
+    resp = requests.get(req)
+    #If the http request returns bad response, error
+    if resp.status_code != 200:
         return None
-
     
+    #Pass the text to BeautifulSoup to analyze
+    soup = BeautifulSoup(resp.text, 'html.parser')    
+    
+    #Find certain tags that we want to use to create our response to the user
+    ingredient_strs = soup.find_all(class_="ingredients__text")
+
+    #Process list of ingredients
+    ingredients = []
+    for ingredient_str in ingredient_strs:
+        ingredient = remove_tags(str(ingredient_str))
+        ingredients.append(ingredient)
+
+    #Convert to returnable string
+    return to_recipe(ingredients)
 
 
-    recipe = True
-    return recipe
+
+#Basic main for testing purposes.
+if __name__ == "__main__":
+    url = "https://bonappetit.com/recipe/brown-butter-peach-cobbler"
+
+    #Process a basic request
+    recipe = process_request(url)
+
+    print(recipe)
+
+
