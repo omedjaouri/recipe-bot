@@ -14,19 +14,8 @@ def to_recipe(ingredients):
         ret_string = ret_string + "\t- "+ingredient+"\n"
     return ret_string
 
-
-
-#Processes a user's request to handle a recipe link
-def process_request(req):
-    #Issue an HTTP Get command to the url
-    resp = requests.get(req)
-    #If the http request returns bad response, error
-    if resp.status_code != 200:
-        return None
-    
-    #Pass the text to BeautifulSoup to analyze
-    soup = BeautifulSoup(resp.text, 'html.parser')    
-    
+#Processes requests with recipes from a BA site
+def process_ba(soup):
     #Find certain tags that we want to use to create our response to the user
     ingredient_strs = soup.find_all(class_="ingredients__text")
 
@@ -40,6 +29,20 @@ def process_request(req):
     return to_recipe(ingredients)
 
 
+#Processes a user's request to handle a recipe link
+def process_request(req):
+    #Issue an HTTP Get command to the url
+    resp = requests.get(req)
+    #If the http request returns bad response, error
+    if resp.status_code != 200:
+        return None
+    
+    #Pass the text to BeautifulSoup to analyze
+    soup = BeautifulSoup(resp.text, 'html.parser')    
+    
+    #Check for specific websites
+    if "bonappetit" in req:
+        return process_ba(soup)
 
 #Basic main for testing purposes.
 if __name__ == "__main__":
