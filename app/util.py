@@ -19,6 +19,10 @@ def process_ba(soup):
     #Find certain tags that we want to use to create our response to the user
     ingredient_strs = soup.find_all(class_="ingredients__text")
 
+    #If we were unable to find any ingredients, likely not a BonAppetit site
+    if ingredient_strs is None:
+        return None
+
     #Process list of ingredients
     ingredients = []
     for ingredient_str in ingredient_strs:
@@ -47,6 +51,7 @@ def process_request(req):
 #Basic main for testing purposes.
 if __name__ == "__main__":
     url = "https://bonappetit.com/recipe/brown-butter-peach-cobbler"
+    url = "http://www.google.com" 
 
     #Process a basic request
     recipe = process_request(url)
